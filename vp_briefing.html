@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strategic Briefing</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --charcoal: #3D3935;
+    --blue: #009ACE;
+    --purple: #503F81;
+    --gray: #8A8380;
+    --gray-light: #DEDAD8;
+    --off-white: #F5F5F4;
+    --white: #FFFFFF;
+    --ink: #1A1715;
+    --blue-light: #D6EEF7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Karla', sans-serif;
+    background: var(--off-white);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 48px 120px;
+  }
+
+  /* ── Masthead ── */
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--charcoal);
+    margin-bottom: 52px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .masthead-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--charcoal);
+    line-height: 1.2;
+  }
+
+  .masthead h1 em {
+    font-style: italic;
+    color: var(--blue);
+  }
+
+  .masthead-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .masthead-meta strong {
+    display: block;
+    color: var(--charcoal);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  /* ── Intro ── */
+  .intro {
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: var(--ink);
+    font-weight: 400;
+    margin-bottom: 52px;
+    max-width: 680px;
+    animation: fadeUp 0.5s ease 0.08s both;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 600;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gray-light);
+  }
+
+  /* ── Decision cards ── */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.5s ease 0.16s both;
+  }
+
+  .card {
+    padding: 26px 26px 30px;
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-top: 3px solid;
+  }
+
+  .card.for   { border-top-color: var(--blue); }
+  .card.risk  { border-top-color: var(--gray); }
+
+  .card-title {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  .card.for  .card-title { color: var(--blue); }
+  .card.risk .card-title { color: var(--gray); }
+
+  .card ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+  .card ul li {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    font-weight: 400;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .card.for  ul li::before { content: '→'; position:absolute; left:0; color:var(--blue);  font-size:11px; top:2px; }
+  .card.risk ul li::before { content: '—'; position:absolute; left:0; color:var(--gray);  font-size:11px; top:1px; }
+
+  /* ── Context strip ── */
+  .context-strip {
+    background: var(--charcoal);
+    padding: 28px 32px;
+    margin-bottom: 52px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    animation: fadeUp 0.5s ease 0.24s both;
+  }
+
+  .ctx-label {
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .ctx-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .ctx-sub {
+    font-size: 11.5px;
+    color: rgba(189,180,178,0.7);
+    font-weight: 300;
+    line-height: 1.55;
+  }
+
+  /* ── Team grid ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    margin-bottom: 52px;
+    animation: fadeUp 0.5s ease 0.32s both;
+  }
+
+  .tc {
+    padding: 16px 12px 18px;
+    text-align: center;
+  }
+
+  .tc.you    { background: var(--charcoal); }
+  .tc.hire   { background: var(--blue); }
+  .tc.future { background: var(--gray-light); }
+
+  .tc-when {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .tc.you  .tc-when,
+  .tc.hire .tc-when  { color: rgba(255,255,255,0.5); }
+  .tc.future .tc-when { color: var(--gray); }
+
+  .tc-name {
+    font-size: 11.5px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+
+  .tc.you  .tc-name,
+  .tc.hire .tc-name  { color: var(--white); }
+  .tc.future .tc-name { color: var(--charcoal); }
+
+  .tc-sub {
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  .tc.you  .tc-sub,
+  .tc.hire .tc-sub  { color: rgba(255,255,255,0.55); }
+  .tc.future .tc-sub { color: var(--gray); }
+
+  /* ── Prompt section ── */
+  .prompt-section {
+    animation: fadeUp 0.5s ease 0.4s both;
+    margin-bottom: 48px;
+  }
+
+  .prompt-box {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-left: 4px solid var(--blue);
+    padding: 24px 28px 26px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .prompt-box p + p { margin-top: 14px; }
+  .prompt-box strong { font-weight: 600; color: var(--ink); }
+
+  .copy-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    font-family: 'Karla', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .copy-btn:hover { background: #007ba8; }
+
+  .copy-btn svg {
+    width: 13px; height: 13px;
+    fill: none; stroke: white;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  .copy-note {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .copied {
+    font-size: 12px;
+    color: var(--blue);
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .copied.show { opacity: 1; }
+
+  /* ── Expandable sections ── */
+  .expandable {
+    margin-bottom: 8px;
+    border: 1px solid var(--gray-light);
+    background: var(--white);
+  }
+
+  .expand-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Karla', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--charcoal);
+    text-align: left;
+    transition: background 0.15s;
+  }
+
+  .expand-btn:hover { background: var(--off-white); }
+
+  .expand-btn svg {
+    width: 16px; height: 16px;
+    fill: none; stroke: var(--gray);
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+
+  .expand-btn.open svg { transform: rotate(180deg); }
+
+  .expand-body {
+    padding: 0 0 4px;
+  }
+
+  .expand-body .context-strip { margin-bottom: 0; }
+  .expand-body .team-grid { margin-bottom: 0; padding: 16px; }
+
+  /* ── Footer ── */
+  .footer {
+    padding-top: 28px;
+    border-top: 1px solid var(--gray-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeUp 0.5s ease 0.48s both;
+  }
+
+  .footer-l {
+    font-size: 11px;
+    color: var(--gray);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .footer-r {
+    font-size: 11px;
+    color: var(--gray);
+    font-weight: 300;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 36px 22px 80px; }
+    .masthead { flex-direction: column; gap: 16px; }
+    .masthead-meta { text-align: left; }
+    .cards { grid-template-columns: 1fr; }
+    .context-strip { grid-template-columns: 1fr; gap: 20px; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer { flex-direction: column; gap: 12px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Masthead -->
+  <div class="masthead">
+    <div>
+      <div class="masthead-label" style="color: var(--charcoal);">A long time ago, in a commercial applications team far, far away…</div>
+      <h1>These aren't the droids you're looking for.<br>This is the <em>manager</em> you're looking for.</h1>
+    </div>
+    <div class="masthead-meta">
+      <strong>Commercial Applications</strong>
+      Platform Strategy Lead → Manager Track<br>
+      AOP 2026/27 · For VP Review
+    </div>
+  </div>
+
+  <!-- Intro -->
+  <p class="intro">
+    There is a people and organisational decision that needs to be shaped before the 2026/27 AOP cycle opens in September. The groundwork laid now determines what is possible to ask for then. The question: should the Platform Strategy Lead be formally transitioned to a manager role — and is now the right time?
+  </p>
+
+  <!-- Decision cards -->
+  <div class="section-label">The decision</div>
+  <div class="cards">
+    <div class="card for">
+      <div class="card-title">The case for moving forward</div>
+      <ul>
+        <li>The work already looks like management — formalising removes ambiguity and creates real accountability structure</li>
+        <li>The AOP window this September is the moment to approve the one enabling hire that makes this structurally sound: a Technical Product Lead for SFMC</li>
+        <li>A five-person Commercial Technology team is the scalable destination — it needs a manager in place to build toward it</li>
+        <li>Strategic thinking, stakeholder trust, and people leadership signals are consistently present</li>
+      </ul>
+    </div>
+    <div class="card risk">
+      <div class="card-title">The honest risks</div>
+      <ul>
+        <li>First-time manager — IC to manager is not a guaranteed transition, and getting it wrong costs the team</li>
+        <li>The enabling hire is net new headcount competing against other AOP priorities</li>
+        <li>Without proper support structure, there is real risk of doing both jobs simultaneously</li>
+        <li>Full team structure not in place until Q4 2027 — a meaningful gap between transition and destination</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Prompt -->
+  <div class="prompt-section">
+    <div class="section-label">Take this to Claude or ChatGPT</div>
+    <div class="prompt-box" id="prompt-text">
+      <p>You are a strategic advisor. A Platform Strategy Lead on a commercial technology team has been operating well above IC scope — owning platform direction, managing two developers, bridging Marketing and the tech team, and already making prioritisation and people decisions informally. The question is whether to formalise this into a manager role ahead of the 2026/27 AOP cycle, which opens in September.</p>
+      <p>The case for is strong: the work already looks like management, one enabling hire this September makes the transition structurally sound rather than just a title change, the destination is a five-person team that needs a manager to build toward it, and the individual has shown consistent readiness signals across strategy, stakeholder management, and people leadership. The honest risks: first-time manager, net new headcount, risk of doing both jobs without proper support, and full team structure not complete until Q4 2027.</p>
+      <p><strong>Push back hard on whatever feels weakest. When you've formed a view, be direct about whether you'd endorse moving forward — then offer to build a visual artifact of the org chart, two-year timeline, or business case for whoever wants to take this further.</strong></p>
+    </div>
+    <div class="copy-row">
+      <button class="copy-btn" onclick="copyPrompt()">
+        <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy prompt
+      </button>
+      <span class="copy-note">Paste directly into Claude or ChatGPT</span>
+      <span class="copied" id="copied">Copied ✓</span>
+    </div>
+  </div>
+
+  <!-- Expandable: Key Facts -->
+  <div class="expandable">
+    <button class="expand-btn" onclick="toggle('facts')">
+      <span>Key facts</span>
+      <svg id="facts-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="expand-body" id="facts" style="display:none;">
+      <div class="context-strip">
+        <div>
+          <div class="ctx-label">Current team</div>
+          <div class="ctx-value">1 person</div>
+          <div class="ctx-sub">Platform Strategy Lead operating as a solo IC. Goal is to grow to a five-person team by Q4 2027.</div>
+        </div>
+        <div>
+          <div class="ctx-label">Enabling hire</div>
+          <div class="ctx-value">1 FTE</div>
+          <div class="ctx-sub">Technical Product Lead, SFMC. Q1 2027 start. AOP submission required by September 2026.</div>
+        </div>
+        <div>
+          <div class="ctx-label">Destination</div>
+          <div class="ctx-value">Q4 2027</div>
+          <div class="ctx-sub">Five-person Commercial Technology team. Manager in place. Full SFMC ownership transferred.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Expandable: Target Team -->
+  <div class="expandable">
+    <button class="expand-btn" onclick="toggle('team')">
+      <span>Target team — Q4 2027</span>
+      <svg id="team-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="expand-body" id="team" style="display:none;">
+      <div class="team-grid">
+        <div class="tc you">
+          <div class="tc-when">Now → Manager</div>
+          <div class="tc-name">Dylan Patscot</div>
+          <div class="tc-sub">Manager, Commercial Technology</div>
+        </div>
+        <div class="tc hire">
+          <div class="tc-when">Q1 '27 · AOP hire</div>
+          <div class="tc-name">Technical Product Lead</div>
+          <div class="tc-sub">Salesforce Marketing Cloud</div>
+        </div>
+        <div class="tc future">
+          <div class="tc-when">Q2 '27 · Future</div>
+          <div class="tc-name">MarTech Business Analyst</div>
+          <div class="tc-sub">Commercial Applications</div>
+        </div>
+        <div class="tc future">
+          <div class="tc-when">Q3 '27 · Future</div>
+          <div class="tc-name">Data & Integrations Analyst</div>
+          <div class="tc-sub">Commercial Applications</div>
+        </div>
+        <div class="tc future">
+          <div class="tc-when">Q4 '27 · Future</div>
+          <div class="tc-name">MarTech Platform Specialist</div>
+          <div class="tc-sub">Loyalty & Personalisation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-l">Supporting docs available: 1 Year Plan · Operating Model · Manager Track & FTE Business Case</div>
+    <div class="footer-r">Dylan Patscot · Platform Strategy Lead<br>Commercial Applications</div>
+  </div>
+
+</div>
+<script>
+function toggle(id) {
+  const body = document.getElementById(id);
+  const btn = body.previousElementSibling;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  btn.classList.toggle('open', !isOpen);
+}
+
+function copyPrompt() {
+  const el = document.getElementById('prompt-text');
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const c = document.getElementById('copied');
+    c.classList.add('show');
+    setTimeout(() => c.classList.remove('show'), 2500);
+  });
+}
+</script>
+</body>
+</html>
